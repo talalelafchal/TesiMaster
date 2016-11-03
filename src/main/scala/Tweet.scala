@@ -3,14 +3,14 @@ import java.sql.Time
 /**
   * Created by Talal on 27.10.16.
   */
-case class Tweet(var time:Time,
-                 var tweetId:Long,
-                 var userId:Long,
-                 var retweetId:Option[Long],
-                 var inReplyToStatusId:Int,
-                 var isTruncated:Boolean,
-                 var mentionedUsers: Option[List[Long]],
-                 var hashTags:String,
-                 var text: Option[String] ) {
+case class Tweet(time:Time,
+                 tweetId:Long,
+                 userId:Long,
+                 retweetId:Option[Long],
+                 inReplyToStatusId:Int,
+                 isTruncated:Boolean,
+                 mentionedUsers: List[Long],
+                 hashTags:String,
+                 text: Option[String] ) {
 
 }
