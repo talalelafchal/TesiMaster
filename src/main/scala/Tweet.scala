@@ -5,7 +5,7 @@ import java.sql.Time
   */
 case class Tweet(time:Time,
                  tweetId:Long,
-                 userId:Long,
+                 user:User,
                  retweetId:Option[Long],
                  inReplyToStatusId:Int,
                  isTruncated:Boolean,
