@@ -4,26 +4,23 @@ import scala.collection.mutable.{HashMap}
 /**
   * Created by Talal on 10.11.16.
   */
-case class User(userId: Long, tweetIdList: List[Long]) {
+case class User(userId: Long) {
 
-  def addTweet(id: Long) :User= {
-    User(userId, tweetIdList :+ id)
-  }
 }
 
 object User {
 
   private val usersHashMap = new HashMap[Long, User]
 
-  def getUser(userId: Long, tweetId: Long): User = {
-    if (!usersHashMap.contains(userId)) {
-      usersHashMap += userId -> User(userId, List(tweetId))
-    }
-    else {
-      usersHashMap += userId -> (usersHashMap(userId).addTweet(tweetId))
-    }
-    usersHashMap(userId)
-  }
+  /**
+    *
+    * @param userId
+    * If the user exists add the tweetId to the tweet list
+    * else create a new User and add it to usersHashMap
+    * @return
+    */
+  def getUser(userId: Long): User = usersHashMap.getOrElseUpdate(userId,User(userId))
+
 
   def getUsersHashMap() = usersHashMap
 

@@ -2,5 +2,5 @@ name := "TweetParser"
 
 version := "1.0"
 
-scalaVersion := "2.11.8"
-    
+resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
+libraryDependencies += "co.theasi" %% "plotly" % "0.2-SNAPSHOT"

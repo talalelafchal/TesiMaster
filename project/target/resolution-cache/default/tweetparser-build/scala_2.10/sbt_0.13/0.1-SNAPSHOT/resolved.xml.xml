@@ -4,7 +4,7 @@
 		module="tweetparser-build"
 		revision="0.1-SNAPSHOT"
 		status="integration"
-		publication="20161027114220"
+		publication="20161124143033"
 		e:sbtVersion="0.13" e:scalaVersion="2.10"
 	>
 		<description>
