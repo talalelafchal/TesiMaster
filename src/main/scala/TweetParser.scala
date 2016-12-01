@@ -6,8 +6,6 @@ import java.io.{BufferedWriter, File, FileWriter}
 import java.sql.Time
 
 import scala.io.Source
-import co.theasi.plotly._
-
 import scala.util.Random
 
 
@@ -23,6 +21,8 @@ object TweetParser extends App {
 
   // create a list of tweets
   val tweets: List[CompleteTweet] = line.map { line => lineToTweet(line) }
+
+  createCsvFile()
 
   //    val retweetsOfAbsentTweets = tweets.filter { t => t match {
   //      case CompleteTweet(_,_,_,Some(t2),_,_,_,_,_) => t2.isInstanceOf[AbsentTweet]
@@ -81,25 +81,35 @@ object TweetParser extends App {
   }
 
 
-  // Generate uniformly distributed x
-  val xs =tweets.map(x=> x.time.toString)
 
-  // Generate random y
-  val ys = tweets.map(_=>getRandom())
+  /**
+    * creat csv files tweets/ if there is no tweetid  -1, if original tweet is absent 0, else tweetId
+    */
+  def createCsvFile() = {
+    val tweetFile = new File("tweets.csv")
+//    val retweetFile = new File("retweets.csv")
 
-  def getRandom():Double= {
-    Random.nextDouble()*6
+    val tweetbf = new BufferedWriter(new FileWriter(tweetFile))
+    tweetbf.write("tweetId,retweetId,hour,minute,second\n")
+    tweets.foreach(x => tweetbf.write(x.tweetId.toString +
+      ',' + handleRetweet(x)+
+      ',' + x.time.toString.split(":")(0) +
+      ',' + x.time.toString.split(":")(1) +
+      ',' + x.time.toString.split(":")(2) + '\n'))
+    tweetbf.close()
+
   }
 
-//  val p = Plot().withScatter(xs,ys,ScatterOptions().mode(ScatterMode.Marker))
-//
-//  draw(p, "twitter", writer.FileOptions(overwrite=true))
-  // returns  PlotFile(pbugnion:173,basic-scatter)
+  def retweetIdtoFile(x: Tweet): String = x match {
+    case _: AbsentTweet => "0"
+    case _: CompleteTweet => x.tweetId.toString
+  }
 
-  val file = new File("tweets.csv")
-  val bw = new BufferedWriter(new FileWriter(file))
-  bw.write("time,random\n")
-  tweets.foreach(x=> bw.write(x.time.toString +','+ getRandom().toString+'\n'))
-  bw.close()
+  def handleRetweet(x: CompleteTweet) ={
+    if(x.retweetId!= None){
+      retweetIdtoFile(x.retweetId.get)
+    }
+    else "-1"
+  }
 
 }

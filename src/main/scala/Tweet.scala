@@ -16,6 +16,7 @@ case class CompleteTweet(time:Time,
                  mentionedUsers: List[User],
                  hashTags: List[String],
                  text: Option[String] ) extends Tweet {
+
 }
 
 case class AbsentTweet(tweetId: Long) extends Tweet
