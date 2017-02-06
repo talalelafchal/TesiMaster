@@ -4,12 +4,12 @@
 
 import java.io.{BufferedWriter, File, FileWriter}
 import java.sql.Time
-
 import scala.io.Source
-import scala.util.Random
+
 
 
 object TweetParser extends App {
+  val tweetList = new TweetList()
 
   // get file path
   val filename = args(0)
@@ -17,7 +17,7 @@ object TweetParser extends App {
   // get line
   val line: List[String] = Source.fromFile(filename).getLines().toList
 
-  val tweetList = new TweetList()
+
 
   // create a list of tweets
   val tweets: List[CompleteTweet] = line.map { line => lineToTweet(line) }
@@ -87,7 +87,7 @@ object TweetParser extends App {
     */
   def createCsvFile() = {
     val tweetFile = new File("tweets.csv")
-//    val retweetFile = new File("retweets.csv")
+//  val retweetFile = new File("retweets.csv")
 
     val tweetbf = new BufferedWriter(new FileWriter(tweetFile))
     tweetbf.write("tweetId,retweetId,hour,minute,second\n")
